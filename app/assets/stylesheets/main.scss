@@ -1,0 +1,37 @@
+.error {
+  display: block;
+  color: #db0011;
+  font-size: 80%;
+}
+
+.hint {
+  display: block;
+  font-size: 80%;
+  font-weight: bold;
+  color: #333;
+}
+
+.user-panel {
+  display: flex;
+  padding: 10px 0;
+}
+
+.user-image {
+  img {
+    width: 100% !important;
+    max-width: 45px  !important;
+    height: auto;
+    border-radius: 50%;
+  }
+}
+
+.user-info {
+  padding-left: 15px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+
+  p {
+    margin: 0;
+  }
+}
