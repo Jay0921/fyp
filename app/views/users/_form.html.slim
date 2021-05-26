@@ -1,0 +1,11 @@
+.card
+  .card-header
+    h3.card-title User
+  = simple_form_for [user] do |f|
+    .card-body
+      .form-group
+        = f.input :email, input_html: { class: "form-control", disabled: true }
+      .form-group
+        = f.input :role, collection: User.roles.keys.to_a, include_blank: false, input_html: { class: "form-control" }
+    .card-footer
+      = f.button :submit, class: "btn btn-success"
