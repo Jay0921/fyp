@@ -15,6 +15,7 @@ class TutorsController < ApplicationController
   end
 
   def show
+    @pagy, @comments = pagy(@user.comments)
   end
 
   private

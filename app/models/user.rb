@@ -32,6 +32,7 @@ class User < ApplicationRecord
   enum role: %i[guest student tutor admin]
 
   has_one_attached :image
+  has_many :comments, foreign_key: :recipient_id
 
   validates :image, :username, :phone, presence: true
   validates :username, :phone, uniqueness: true

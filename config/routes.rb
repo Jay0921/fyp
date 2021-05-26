@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :subjects, except: [:show]
   resources :profiles, except: [:show]
   resources :tutors
+  resources :comments
 end
