@@ -70,3 +70,5 @@ gem "rubocop", "~> 1.15"
 gem "devise", "~> 4.8"
 
 gem "pagy", "~> 4.7"
+
+gem "image_processing", "~> 1.12"

@@ -6,7 +6,8 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4
     - if current_user&.present?
       .user-panel
         .user-image
-          img src="https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg"
+          - if current_user.image.attached?
+            = image_tag(current_user.image.variant(resize_to_limit: [250, 250]))
         .user-info
           p= current_user.email
           p= current_user.role.humanize
@@ -22,6 +23,10 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4
               i.nav-icon.fas.fa-book
               p Subjects
         - if current_user&.present?
+          li.nav-item
+            = link_to edit_profile_path(current_user), class: "nav-link"
+              i.nav-icon.fas.fa-id-card
+              p My Profile
           li.nav-item
             a.nav-link href="#{destroy_user_session_path}" data-method="delete" rel="nofollow"
               i.nav-icon.fas.fa-sign-out-alt

@@ -24,5 +24,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  acts_as_taggable_on :subjects
+
   enum role: %i[guest student tutor admin]
+
+  has_one_attached :image
+
+  validates :image, presence: true
 end

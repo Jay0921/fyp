@@ -1,0 +1,23 @@
+= content_for(:js) do
+  = javascript_pack_tag 'javascript/profile'
+
+.card
+  .card-header
+    h3.card-title Profile
+  = simple_form_for(user, url: profile_path(user), html: { method: :patch }) do |f|
+    .card-body
+      .form-group
+        label.string.required * Image
+        div
+          - if user.image.attached?
+            = image_tag(user.image.variant(resize_to_limit: [250, 250]))
+        = f.input :image, label: false
+      .form-group
+        = f.input :email, input_html: { class: "form-control", disabled: true }
+      .form-group
+        = f.input :role, collection: User::REGISTERED_ROLES, include_blank: false, input_html: { class: "form-control", disabled: true }
+      - if user.tutor?
+        .form-group
+          = f.input :subject_list, label: "Subjects", collection: Subject.all, value_method: :name, input_html: { multiple: "true", class: "form-control" }
+    .card-footer
+      = f.button :submit, 'Update Profile' ,class: "btn btn-success"
