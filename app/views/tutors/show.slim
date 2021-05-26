@@ -1,0 +1,24 @@
+.row
+  .col
+    .card.card-outline.card-dark
+      .card-header
+        h3.card-title= @user.username
+      .card-body
+        = image_tag(@user.image.variant(resize_to_limit: [200, 200]))
+        br
+        br
+        p= "Email: #{@user.email}"
+        p= "Phone: #{@user.phone}"
+        a href="https://api.whatsapp.com/send?phone=#{@user.phone}" target="_blank"
+          | WhatsApp
+  .col
+    .card.card-outline.card-dark
+      .card-header
+        h3.card-title Subjects
+      .card-body
+        p= @user.subject_list.join(', ')
+    .card.card-outline.card-dark
+      .card-header
+        h3.card-title Description
+      .card-body
+        p= @user.description

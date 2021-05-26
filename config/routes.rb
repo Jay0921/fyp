@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :users, except: [:show]
   resources :subjects, except: [:show]
   resources :profiles, except: [:show]
+  resources :tutors
 end

@@ -3,12 +3,15 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  description            :text
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  phone                  :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :integer          default("guest")
+#  username               :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -30,5 +33,6 @@ class User < ApplicationRecord
 
   has_one_attached :image
 
-  validates :image, presence: true
+  validates :image, :username, :phone, presence: true
+  validates :username, :phone, uniqueness: true
 end

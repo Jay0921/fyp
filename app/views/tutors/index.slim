@@ -1,0 +1,27 @@
+.card
+  .card-header
+    h3.card-title All Tutors
+    .card-tools
+      = form_tag tutors_path, method: :get
+        .input-group.input-group-sm style=("width: 250px;")
+          = select_tag :query, options_for_select(Subject.all.collect{ |subhect| [subhect.name, subhect.name] }), class: "form-control float-right"
+          .input-group-append
+            button.btn.btn-default type="submit"
+              i.fas.fa-search
+  .card-body.table-responsive.p-0
+    table.table.table-hover
+      thead
+        tr
+          th Email
+          th Subjects
+          th
+      tbody
+        - @users.each do |user|
+          tr
+            td= user.email
+            td= user.subject_list.join(', ')
+            td
+              = link_to 'View', tutor_path(user), class: "btn btn-info"
+  .card-footer.clearfix
+    = render partial: 'shared/pagination', locals: { pagy: @pagy }
+    == pagy_info(@pagy)
