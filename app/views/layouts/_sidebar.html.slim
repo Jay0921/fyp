@@ -12,11 +12,15 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4
           p= current_user.role.humanize
     nav.mt-2
       ul.nav.nav-pills.nav-sidebar.flex-column data-widget="treeview" role="menu"
-        - if can? :manage, User
+        - if can? :manage, :all
           li.nav-item
             = link_to users_path, class: "nav-link"
-              i.nav-icon.fas.fa-sign-out-alt
+              i.nav-icon.fas.fa-users
               p Users
+          li.nav-item
+            = link_to subjects_path, class: "nav-link"
+              i.nav-icon.fas.fa-book
+              p Subjects
         - if current_user&.present?
           li.nav-item
             a.nav-link href="#{destroy_user_session_path}" data-method="delete" rel="nofollow"
