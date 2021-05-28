@@ -33,6 +33,8 @@ class User < ApplicationRecord
 
   has_one_attached :image
   has_many :comments, foreign_key: :recipient_id
+  has_many :sent_appointments, foreign_key: :applicant_id, class_name: :Appointment
+  has_many :received_appointments, foreign_key: :respondent_id, class_name: :Appointment
 
   validates :image, :username, :phone, presence: true
   validates :username, :phone, uniqueness: true

@@ -68,7 +68,6 @@ gem "paper_trail", "~> 12.0"
 gem "cancancan", "~> 3.2"
 gem "rubocop", "~> 1.15"
 gem "devise", "~> 4.8"
-
 gem "pagy", "~> 4.7"
-
 gem "image_processing", "~> 1.12"
+gem "gon", "~> 6.4"

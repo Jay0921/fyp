@@ -14,7 +14,22 @@ class TutorsController < ApplicationController
     @pagy, @users = pagy(users)
   end
 
+  def appointment
+    appointment = Appointment.find_or_create_by(applicant_id: params['userId'], respondent_id: params['tutorId'], status: 'pending')
+
+    respond_to do |format|
+      format.js
+      format.json { render status: :created }
+    end
+  end
+
   def show
+    gon.push({
+      user_id: current_user.id,
+      tutor_id: @user.id,
+      appointment_url: appointment_tutor_path
+    })
+
     @pagy, @comments = pagy(@user.comments)
   end
 

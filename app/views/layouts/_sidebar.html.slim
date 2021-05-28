@@ -27,9 +27,13 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4
             = link_to edit_profile_path(current_user), class: "nav-link"
               i.nav-icon.fas.fa-id-card
               p My Profile
+          li.nav-item
+            = link_to user_appointments_path(current_user), class: "nav-link"
+              i.nav-icon.fas.fa-calendar-check
+              p Appointments
         li.nav-item
           = link_to tutors_path, class: "nav-link"
-            i.nav-icon.fas.fa-id-card
+            i.nav-icon.fas.fa-user-graduate
             p Tutors
         - if current_user&.present?
           li.nav-item

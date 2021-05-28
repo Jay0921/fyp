@@ -1,3 +1,6 @@
+= content_for(:js) do
+  = javascript_pack_tag 'javascript/tutors'
+
 .row
   .col
     .card.card-outline.card-dark
@@ -11,6 +14,9 @@
         p= "Phone: #{@user.phone}"
         a href="https://api.whatsapp.com/send?phone=#{@user.phone}" target="_blank"
           | WhatsApp
+        - unless current_user.id == @user.id
+          div
+            btn.btn.btn-primary.js-apply Apply
   .col
     .card.card-outline.card-dark
       .card-header
@@ -36,9 +42,10 @@
             span.comment-time #{time_ago_in_words(comment.created_at)} ago
           p= comment.message
   .card-footer.clearfix
-    = simple_form_for [Comment.new] do |f|
-      = f.input :sender_id, as: :hidden, input_html: { value: current_user.id }
-      = f.input :recipient_id, as: :hidden, input_html: { value: @user.id }
-      .form-group
-        = f.input :message, label:false, placeholder: 'Add a public comment', input_html: { class: "form-control" }
-      = f.button :submit, 'Comment', class: "btn btn-success"
+    - if current_user.present?
+      = simple_form_for [Comment.new] do |f|
+        = f.input :sender_id, as: :hidden, input_html: { value: current_user.id }
+        = f.input :recipient_id, as: :hidden, input_html: { value: @user.id }
+        .form-group
+          = f.input :message, label:false, placeholder: 'Add a public comment', input_html: { class: "form-control" }
+        = f.button :submit, 'Comment', class: "btn btn-success"

@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   devise_for :users
-  resources :users, except: [:show]
+  resources :users, except: [:show] do
+    resources :appointments
+  end
   resources :subjects, except: [:show]
   resources :profiles, except: [:show]
-  resources :tutors
+  resources :tutors do
+    member do
+      get :appointment
+    end
+  end
   resources :comments
 end

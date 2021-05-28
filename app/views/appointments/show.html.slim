@@ -1,0 +1,21 @@
+= content_for(:js) do
+  = javascript_pack_tag 'javascript/appointment'
+
+.card
+  .card-header
+    h3.card-title Appointment
+  .card-body
+    p= "Applicant name: #{@appointment.applicant.username}"
+    p= "Status: #{@appointment.status.humanize}"
+
+    - case @appointment.status
+    - when 'approved'
+      btn.btn.btn-danger.js-update(data-value="canceled") Cancel
+    - when 'pending'
+      .btn-group
+        btn.btn.btn-success.js-update(data-value="approved") Approve
+        btn.btn.btn-warning.js-update(data-value="rejected") Reject
+    - when 'rejected'
+      p <b>You've rejected this application</b>
+    - when 'canceled'
+      p <b>You've canceled this application</b>
