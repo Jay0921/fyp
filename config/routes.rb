@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users, except: [:show] do
     resources :appointments
+    resources :requests
   end
   resources :subjects, except: [:show]
   resources :profiles, except: [:show]

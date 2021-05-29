@@ -1,20 +1,17 @@
 .card
   .card-header
-    h3.card-title My Appointments
+    h3.card-title My Requests
   .card-body.table-responsive.p-0
     table.table.table-hover
       thead
         tr
-          th Applicant
+          th Tutor
           th Status
-          th
       tbody
         - @appointments.each do |appointment|
           tr
-            td= appointment.applicant.username
+            td= appointment.respondent.username
             td= appointment.status.humanize
-            td
-              = link_to 'View', user_appointment_path(@user, appointment), class: "btn btn-info"
   .card-footer.clearfix
     = render partial: 'shared/pagination', locals: { pagy: @pagy }
     == pagy_info(@pagy)
