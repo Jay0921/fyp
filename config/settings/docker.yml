@@ -1,0 +1,6 @@
+db:
+  host: db
+  database: fyp_<%= ENV['RAILS_ENV'] %>
+  username: postgres
+  password: postgres
+  pool: 5

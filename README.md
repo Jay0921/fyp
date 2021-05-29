@@ -5,20 +5,19 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Install Docker
+* Go to project folder and type the command below
+```
+bin/setup
+```
+* Run appplication with this command
+```
+docker-compose up
+```
+* Go to browser and type http://localhost:3000
+* Login with admin account
+```
+email: admin@gmail.com
+password: 123123
+```

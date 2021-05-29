@@ -71,3 +71,5 @@ gem "devise", "~> 4.8"
 gem "pagy", "~> 4.7"
 gem "image_processing", "~> 1.12"
 gem "gon", "~> 6.4"
+
+gem "config", "~> 3.1"

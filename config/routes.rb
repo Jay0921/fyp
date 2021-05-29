@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'home#index'
-  devise_for :users
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations'
+  }
   resources :users, except: [:show] do
     resources :appointments
     resources :requests

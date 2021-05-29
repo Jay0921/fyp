@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  core: &core
+    image: fyp
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        RUBY_VERSION: '3.0.0'
+        NODE_MAJOR: '12'
+        BUNDLER_VERSION: '2.1.2'
+    tmpfs:
+      - /tmp
+
+  backend: &backend
+    <<: *core
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/opt/app:cached
+      - rails_assets:/opt/app/assets
+      - rails_tmp:/opt/app/tmp/cache
+      - bundle:/usr/local/bundle
+      - node_modules:/opt/app/node_modules
+      - packs:/opt/app/public/packs
+    environment:
+      - NODE_ENV=development
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
+      - HISTFILE=/opt/app/log/.bash_history
+      - EDITOR=vi
+      - MALLOC_ARENA_MAX=2
+    depends_on:
+      - db
+
+  app:
+    <<: *backend
+    ports:
+      - '3000:3000'
+    entrypoint: ./entrypoints/app-entrypoint.sh
+
+  db:
+    image: postgres:13.2
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - '5432:5432'
+
+  webpacker:
+    <<: *core
+    command: ./bin/webpack-dev-server
+    ports:
+      - "3035:3035"
+    volumes:
+      - .:/opt/app:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/opt/app/node_modules
+      - packs:/opt/app/public/packs
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+
+volumes:
+  postgres:
+  bundle:
+  node_modules:
+  rails_tmp:
+  rails_assets:
+  packs:

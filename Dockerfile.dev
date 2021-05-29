@@ -1,0 +1,40 @@
+ARG RUBY_VERSION
+
+FROM ruby:$RUBY_VERSION
+
+ARG NODE_MAJOR
+ARG BUNDLER_VERSION
+
+# Set default env vars
+ENV APP_DIR /opt/app
+ENV QMAKE /usr/lib/x86_64-linux-gnu/qt5/bin/qmake
+
+# Dependencies
+ENV FONT_DEPS fonts-wqy-microhei ttf-wqy-microhei fonts-wqy-zenhei ttf-wqy-zenhei
+ENV APP_DEPS vim build-essential xmlsec1 cron nodejs yarn ruby-dev zlib1g-dev liblzma-dev libxml2-utils libsqlite3-dev libcurl4-openssl-dev imagemagick
+ENV WEBKIT_DEPS libqt5webkit5-dev qt5-qmake libxml2-dev libxslt1-dev xvfb
+
+# Install deps
+RUN apt-get update -qq && apt-get install apt-transport-https
+ADD https://deb.nodesource.com/setup_$NODE_MAJOR.x /tmp/setup_node
+RUN cat /tmp/setup_node | bash -
+ADD https://dl.yarnpkg.com/debian/pubkey.gpg /tmp/yarn.gpg
+RUN apt-key add /tmp/yarn.gpg && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update -qq && \
+    apt-get install -yq --no-install-recommends $APP_DEPS $WEBKIT_DEPS $FONT_DEPS && \
+    apt-get clean && \
+    rm -rf /var/cache/apt/archives/* && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    truncate -s 0 /var/log/*log && \
+    gem install bundler -v $BUNDLER_VERSION
+
+WORKDIR $APP_DIR
+COPY Gemfile* ./
+RUN bundle check || bundle install
+COPY package.json .
+COPY yarn.lock .
+RUN yarn install --check-files
+COPY . .
+
+RUN chmod +x entrypoints/app-entrypoint.sh
